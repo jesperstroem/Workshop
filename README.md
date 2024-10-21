@@ -1,7 +1,7 @@
 # Workshop
 Welcome to the Git workshop!
 
-## Preperation
+## Preparation
 ### Install Git
 First we need to install Git on your computer\
 Download it here: https://git-scm.com/downloads \
