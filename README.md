@@ -275,7 +275,32 @@ In workshop 2 you learned to use the following git commands:
 - merge
 
 ## Workshop 3 - Using .gitignore
+You now master the very basic git skills to get started on your journey with version control.\
+The last thing you should learn is how to configure the .gitignore.\
+The .gitignore file tells git which files in the repository you do not want to have under version control.\
+This is useful for many different things - i personally use it for cached files, larger files (images etc.) or log files.
 
+First, download any image of Google and put it inside your repository and run `git status` to verify that git sees the new image.\
+
+Now, run the following:
+
+    $ echo <name of your image file> > .gitignore
+
+Observe the content of the newly created .gitignore file. What do you think this means?
+
+You will get the answer by running:
+
+    $ git add .gitignore
+    $ git status
+    $ ls -a
+
+Notice how `git status` does not see the newly uploaded image file, however, when you run `ls -a` you still see the image file.\
+This is because we told git to ignore the file.
+
+### Extra
+Go to https://git-scm.com/docs/gitignore and read about the syntax of the .gitignore file.
+
+Play around with your repository and the .gitignore file.
 
 ### Summary
 In workshop 3 you learned to use the .gitignore file so that you can ignore files that should not be included in the version control.
