@@ -13,52 +13,65 @@ If it is installed correctly, it should look something like the following (versi
 ![alt text](images/install.png)
 
 ### Create a Github user
-Create a user at Github: https://github.com/ (If you do not already have one)\
+Create a user at Github: https://github.com/ (If you do not already have one)
 
 ## Workshop 1 - The basics
 ### Create a new repository
-TODO
+The first thing we want to do is create a new Github repository.
+
+Sign in at https://github.com/ and press "new" at the homepage.
+
+Name your repository "Workshop", choose "Private" and check the box "Add a README file" (important).
+
+Leave everything else as is and press "Create Repository".
 
 ### Clone
-TODO
-    $ git clone 
+Now that we made a repository, open up a Windows command prompt on your computer.\
+Navigate to a folder where you want your new repository to reside.\
+
+Then run the following command:
+
+    $ git clone https://github.com/<username>/Workshop.git
+    
+Notice the following pop-up from Github:\
+![alt text](images/auth.png)
+
+You are seeing this because you have not yet authenticated yourself with Github.\
+Choose either option and follow the authentication flow. Authentication should not be necessary in the future.
+
+Now run:
+
     $ cd Workshop
     $ ls -a
+
+Congratulations - you have cloned your first repository. Notice the output of `ls -a`?\
+It shows you the content of the working directory. Right now it only contains a README and the .git folder, which tells you that it is a git repository.
 
 ### Add
 Let's first add a new file to the working directory. Run the following command:
 
-    $ echo "" > file.txt
+    $ echo "My first file" > file.txt
+    $ ls -a
+    $ cat file.txt
 
-This creates an empty .txt file in your working directory. This means it is not in your repository yet.\
-Try to run `git status` and observe the output - Git has now noticed that you changed a file in the working directory.\
-However it is not yet in the staging area. To do so, we use `git add`. Run the following:
+This creates a new .txt file, which you can see by running `ls -a`.\
+`cat file.txt` prints out the content of the file.\
+The file is in our *working directory*, however it nedither in the *staging area* or *repository* yet.\
+Try to run `git status` and observe the output - Git has noticed that you changed a file in the working directory.\
+To add the file to the staging area, we use `git add`. Run the following:
 
     $ git add file.txt
     $ git status
 
-What does `git status` tell you now? You have successfully added a file to the staging area!.\
-Now let's say i want to change my file, because i made a mistake (such as in this case, where the file is empty and pretty useless).\
+What does `git status` tell you now? You have successfully added a file to the *staging area*!.\
+Now let's say i want to change my file, because i made a mistake (such as in this case, where the file is empty and therefore pretty useless).\
 Run the following commands:
 
     $ echo "Useful content" > file.txt
     $ cat file.txt
 
 Now what happens if you run `git status`? Observe that Git remembers what you have staged - however it also notices your new changes.\
-To stage the new changes, simply run `git add file.txt` once more. Note that you can also run `git add .` to stage all changes in the working directory.
-
-### Restore
-Try to create a new file and stage it:
-
-    $ echo "New content" > new_file.txt
-    $ git add new_file.txt
-
-The file is now ready for a commit. But what if we regretted adding this file to the staging area? We can fix that with `git restore`. Run the following:
-
-    $ git restore --staged new_file.txt
-
-Notice that the file is still in our working directory but that `git status` now shows the file as unstaged.
-Run `git add new_file.txt` again to add it to the staging area once more.
+To stage the new changes, simply run `git add file.txt` once more. Note that you can also run `git add .` to simultaneously stage all changes in the working directory.
 
 ### Commit
 To commit your staged changes, run the following command:
@@ -70,34 +83,75 @@ Now try to run `git status` and `git log`.\
 `git status` should tell you that your local repository is now 1 commit ahead of the remote repository.\
 `git log` should show you the commit history with your new commit.
 
+### Diff & restore
+Try to edit your file without staging it:
+
+    $ echo "New content" > file.txt
+    $ cat file.txt
+    $ git status
+
+Once again we see that Git has registered a change to the file. But what if we wanted to know exactly what changed? Run the diff command:
+
+    $ git diff file.txt
+
+Notice how Git shows you what was removed, and what was added. This command is useful if you forgot what changed since your last commit.
+
+Now stage the file with `git add file.txt`. 
+
+The file is now ready for a commit. But what if we regretted adding this file to the staging area? We can fix that with `git restore`. Run the following:
+
+    $ git restore --staged file.txt
+    $ git status
+
+Notice that the file is still in our working directory but that `git status` now shows the file as unstaged.\
+Try to run `git add file.txt` and `git commit -m "Second commit"` to stage and commit the new change.
+
+Notice how `git status` will now show you that your local repository is 2 commits ahead of the remote.
+
 ### Pull
-Our goal is to upload our newly created commit to the remote repository on Github. However, a good practice when doing so is to always run `git pull` before doing so.
-In this case `git pull` will do nothing, since no one else has uploaded any commits to our repository. Run the following:
+Our next goal is to upload our newly created commit to the remote repository on Github. However, you should now ask yourself - What if someone else changed the remote repository since i cloned it in the beginning of the workshop? To simulate this situation, i want you to go to Github and perform a remote commit.
+From the homepage of your repository, choose the README file and press the edit sign in the right-hand side:
+
+![alt text](images/remotecommit.png)
+
+In the online editor, write "Read this README file" below the headline and press "commit changes" twice.
+
+Now you have created a remote commit that changed the content of the README file.
+
+Now go back to your command prompt and run:
 
     $ git pull
 
-Notice how Git will tell you that your local repository is already up to date with the remote repository.\
-This means that we can safely "push" our new commit.
+What just happened is that git pulled the remote commit and "merged" it with your local commits.\
+In this situation, git does that automatically, because they were separate files. However, sometimes you will have to do it manually, which we will get to later. 
+
+Mow that we have pulled we can safely "push" our new commits.
 
 ### Push
 Run the following:
 
     $ git push
 
-Notice the following pop-up from Github:\
-![alt text](images/auth.png)
+As a final task, try to run `git log` and examine the output. What does it tell you?\
+Try also to run `git status`. Observe how Git tells you that your local repository is up to date with the remote.\
 
-You are seeing this because you have not yet authenticated yourself with your Github repository - this means you can't push your changes just yet!\
-Choose either option and follow the authentication flow. The push should happen automatically after this, and authentication should not be necessary in the future.
+### Checkout
+So far so good - but a basic idea of Git should be for us to return to an earlier commit, right?\
 
-As a final task, try to run `git log`. Do you notice what is different in the logs?
+Try to run `git log` and find the entry of your very first commit (probably called "Initial commit"). Notice how the commit has an ID string in the top?\
+Copy the string and run:
 
-### Extra
+    $ git checkout <ID>
+    $ ls -a
+
+What do you notice? The working directory is now back to it's initial state!\
+Run the following command to return to the newest commit:
+
+    $ git switch -
+
+### Explore Github
 Try to go to the page of your Github repository and explore the information available.\
-Can you see your changes? The new commit? What do you see if you pick a certain file and press "history" in the right-hand side of the web page?
-
-Try to access new_file.txt on Github. Try to edit the file in the online editor and press "commit changes".\
-Now in your computer's command window, try to run `git pull`. What happened?
+Do you see your changes? Your local commits? The remote commit? What do you see if you pick a certain file and press "history" in the right-hand side of the web page?
 
 ### Summary
 In workshop 1 you learned to use the following git commands:
@@ -105,12 +159,14 @@ In workshop 1 you learned to use the following git commands:
 - add
 - status
 - restore
+- diff
 - commit
 - pull
 - push
+- checkout
 
 ## Workshop 2 - Branches and merges
-Using branches is a very powerful tool that will allow you to keep multiple separate versions of the repository in parallel.
+Managing branches is a very valuable skill that will allow you to keep multiple separate versions of the repository in parallel.\
 
 # Creating branches
 
@@ -118,21 +174,25 @@ Try to run the following:
 
     $ git branch
 
-This tells you which branches are currently available in your repository - there should only be a default "main" branch which every git repository will start with.\
-Notice the * which tells you that you are currently on that branch - in other words, you have "checked out" the main branch.
+This command tells you which branches are currently available in your repository - there should only be a default "main" branch which every git repository will start with.\
+This is also the branch we have been working on so far. It contains multiple commits and therefore multiple snapshots of the code, but it is still only one branch.
+Notice the * which tells you that you are currently on that branch - in git terminology you have "checked out" the main branch.
 
 To start a new branch run the following:
 
-    $ git branch -b experiment
+    $ git branch experiment
+    $ git branch
 
-This will create a new branch called "experiment" and will automatically "check out" that branch.\
-By running `git branch` you will notice the new branch and that the * has moved
+This will create a new branch called "experiment".\
+By running `git branch` you will notice the new branch, but that the * is still at main.
 
-Now you can simply run `git checkout <branch_name>` to switch between the branches. 
+Now you can simply run `git checkout experiment` to switch between the branches. Run `git branch` to verify that it worked.\
+Notice how we used the checkout command again - but this time we checkout a branch and not a commit.
 
-Notice that the branches at this point are completely identical, since the new branch "spawned" from the other branch, and we have not made any changes yet.
+Try to switch back and forth between experiment and main.\
+What do you notice? The branches at this point are completely identical - since experiment "spawned" from main, and we have not made any new commits yet.
 
-Check out the new experiment branch and run the following commands:
+Check out the experiment branch and run the following commands:
 
     $ echo "Now we are on another branch" > file.txt
     $ echo "The new branch has additional content" > new.txt
@@ -140,7 +200,9 @@ Check out the new experiment branch and run the following commands:
 This edits the existing "file.txt" and adds another file called "new.txt".
 
 Run `git add .` and `git commit -m "Commit on new branch"`.\
-Then run `git pull` - why does this fail?
+At this point we are pretty experienced git users, so we know that the next step is to run `git pull`. Go ahead and do that.
+
+What does git tell you? Why does it fail?
 
 The answer is pretty simple - your new branch is not linked to any remote branch, so git does not know where to pull from!
 
@@ -157,8 +219,55 @@ As a last effort, have a look at Github and explore your branch history. "Insigh
 Congratulations - you now know how to keep multiple versions of your code!
 
 ### Merging
+The next step is to learn about merging. A very common task when working with multiple branches, is that you want the branches to merge - in other words, you want the changes on one branch to be reflected in another branch.
+
+In our case, we want our changes to the experiment branch to be merged back into the main branch.
+To do so, run the following:
+
+    $ git merge experiment
+    $ git pull
+    $ git push
+    $ ls -a
+    $ cat file.txt
+
+What do you notice now? Our working directory now contains the new .txt file and the contents of file.txt has changed.\
+In this case, the merge operation went well, because git did so automatically.\
+However, sometimes merge conflicts will arise and you should know how to solve them.
 
 ### Fixing merge conflicts
+Now try changing the contents of new.txt, add the changes and commit:
+
+    $ echo "We want a merge conflict" > new.txt
+    $ git add .
+    $ git commit -m "Ready for merge conflicts"
+
+Now do the following:
+
+    $ git checkout experiment
+    $ echo "We want a merge conflict really bad" > new.txt
+    $ git add .
+    $ git commit -m "Merge conflicts are easy to solve"
+
+Now we have made two separate commits on main and experiment, and the content of new.txt is different - but let's try to merge and see what happens:
+
+    $ git merge main
+    $ git status
+
+What does the output tell you? You have a merge conflict, and it is because of new.txt.
+
+Try to open new.txt file in a notepad - what do you see?
+
+![alt text](images/conflict.png)
+
+This notation may look very weird to you - but fear not, it is actually rather simple\
+Git tells you, that HEAD (meaning your current commit) has a different line of text than the main branch.\
+To fix this delete everything in the file except for the line "We want a merge conflict".\
+You have now told Git what the file should look like, and we are ready to commit, pull and push:
+
+    $ git add .
+    $ git commit -m "I solved the merge conflict on my own!"
+    $ git pull
+    $ git push
 
 ### Summary
 In workshop 2 you learned to use the following git commands:
@@ -166,6 +275,7 @@ In workshop 2 you learned to use the following git commands:
 - merge
 
 ## Workshop 3 - Using .gitignore
+
 
 ### Summary
 In workshop 3 you learned to use the .gitignore file so that you can ignore files that should not be included in the version control.
