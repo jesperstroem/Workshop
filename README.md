@@ -4,7 +4,8 @@ Welcome to the Git workshop!
 ## Preparation
 ### Install Git
 First we need to install Git on your computer.\
-Download it here: https://git-scm.com/downloads\
+Download it here: https://git-scm.com/downloads
+
 Choose every default option when prompted.
 
 When finished please open your Windows commandline and type "git -v"\
