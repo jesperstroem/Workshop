@@ -52,6 +52,10 @@ This will make it easier for us to work with Git and Powershell. Don't worry too
 
 In the shell, navigate to a folder where you want your new repository to reside.
 
+I usually just have a folder on my C drive called "git repos", where i put my repositories.
+
+You can create a new directory in powershell with `mkdir <name>`.
+
 You can use the `cd` command to change folders and  `ls` to list folder content.
 
 Then run the following command:
