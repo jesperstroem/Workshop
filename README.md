@@ -391,11 +391,11 @@ You will get the answer by running:
 
     git add .gitignore
     git status
-    ls -a
+    ls -Force
 
-Notice how `git status` does not see the newly uploaded image file, however, when you run `ls -a` you still see the image file.
+Notice how `git status` does not recognize the image file, however, when you run `ls -Force` you still see the image file in the working directory.
 
-This is because we told git to ignore the file.
+This is because we told git to ignore the file via the .gitignore file.
 
 ### Extra
 Go to https://git-scm.com/docs/gitignore and read about the syntax of the .gitignore file.
