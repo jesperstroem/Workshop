@@ -52,6 +52,10 @@ This will make it easier for us to work with Git and Powershell. Don't worry too
 
 In the shell, navigate to a folder where you want your new repository to reside.
 
+I usually just have a folder on my C drive called "git repos", where i put my repositories.
+
+You can create a new directory in powershell with `mkdir <name>`.
+
 You can use the `cd` command to change folders and  `ls` to list folder content.
 
 Then run the following command:
@@ -179,7 +183,7 @@ What just happened is that git pulled the remote commit and "merged" it with you
 
 In this situation, git does that automatically, because they were separate files. However, sometimes you will have to do it manually, which we will get to later. 
 
-Mow that we have pulled we can safely "push" our new commits.
+Now that we have pulled we can safely "push" our new commits.
 
 ### Push
 Run the following:
@@ -387,11 +391,11 @@ You will get the answer by running:
 
     git add .gitignore
     git status
-    ls -a
+    ls -Force
 
-Notice how `git status` does not see the newly uploaded image file, however, when you run `ls -a` you still see the image file.
+Notice how `git status` does not recognize the image file, however, when you run `ls -Force` you still see the image file in the working directory.
 
-This is because we told git to ignore the file.
+This is because we told git to ignore the file via the .gitignore file.
 
 ### Extra
 Go to https://git-scm.com/docs/gitignore and read about the syntax of the .gitignore file.
