@@ -183,7 +183,7 @@ What just happened is that git pulled the remote commit and "merged" it with you
 
 In this situation, git does that automatically, because they were separate files. However, sometimes you will have to do it manually, which we will get to later. 
 
-Mow that we have pulled we can safely "push" our new commits.
+Now that we have pulled we can safely "push" our new commits.
 
 ### Push
 Run the following:
